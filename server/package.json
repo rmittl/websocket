@@ -1,0 +1,15 @@
+{
+  "name": "websocket",
+  "version": "1.0.0",
+  "description": "small chat",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Robert Mittl",
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^1.17.2",
+    "ws": "^5.1.0"
+  }
+}
