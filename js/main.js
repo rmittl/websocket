@@ -6,13 +6,13 @@ const chatButton = chatContainer.querySelector('button')
 const personalContainer = document.querySelector('.personal__container')
 const personalButton = personalContainer.querySelector('button')
 const fragment = document.createDocumentFragment()
+const nameField = document.querySelector('#name')
+const nameFieldValue = nameField.value
+const personalName = nameFieldValue
 
 personalButton.addEventListener('click', e => {
   // catch the value of the input field
 
-  const nameField = document.querySelector('#name')
-  const nameFieldValue = nameField.value
-  const personalName = nameFieldValue
   const paragraphPersonal = document.createElement('p')
 
   paragraphPersonal.innerHTML = `Your name is ${personalName}`
@@ -46,8 +46,9 @@ websocket.onmessage = e => {
 chatButton.addEventListener('click', _ => {
   const textMessageField = document.querySelector('#text').value
 
-  websocket.send(textMessageField)
+  // websocket.send(textMessageField)
   websocket.send(JSON.stringify({
+    name: personalName,
     type: 'message',
     data: textMessageField
   }))

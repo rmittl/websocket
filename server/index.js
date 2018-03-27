@@ -1,17 +1,21 @@
 const mongo = require('mongodb').MongoClient
 const url = 'mongodb://localhost:27017/'
 
-mongo.connect(url, (err, db) => {
-  console.log('Mongo DB connected')
-  if (err) throw err
-  const dbo = db.db('myChatapp')
-  const myobj = { name: 'Company Inc', address: 'Highway 37' }
-  dbo.collection('test').insertOne(myobj, (err, res) => {
+function insertMessage(message) {
+  mongo.connect(url, (err, db) => {
+    console.log('Mongo DB connected')
     if (err) throw err
-    console.log('1 document inserted')
-    db.close()
+    const dbo = db.db('myChatapp')
+
+    dbo.collection('customers').insertOne(message, (err, res) => {
+      if (err) throw err
+      console.log('1 document inserted')
+      db.close()
+    })
   })
-})
+}
+// const message = { 'name': 'Alexandra Schnell', 'type': 'message', 'data': 'when is the next meeting' }
+// insertMessage(message)
 
 const Websocket = require('ws')
 const wsServer = new Websocket.Server({ port: 3333 })
@@ -27,6 +31,8 @@ wsServer.on('connection', ws => {
       }
     })
 
+
+    insertMessage({ m })
     console.log('received:' + m)
     ws.send(m)
   })
