@@ -20,7 +20,7 @@ personalButton.addEventListener('click', e => {
   personalContainer.appendChild(fragment)
   nameField.parentNode.removeChild(nameField)
   personalButton.parentNode.removeChild(personalButton)
-  sock.send(JSON.stringify({
+  websocket.send(JSON.stringify({
     type: 'name',
     data: personalName
   }))
@@ -47,7 +47,7 @@ chatButton.addEventListener('click', _ => {
   const textMessageField = document.querySelector('#text').value
 
   websocket.send(textMessageField)
-  sock.send(JSON.stringify({
+  websocket.send(JSON.stringify({
     type: 'message',
     data: textMessageField
   }))
