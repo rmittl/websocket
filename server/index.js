@@ -1,21 +1,33 @@
+
 const mongo = require('mongodb').MongoClient
 const url = 'mongodb://localhost:27017/'
 
-function insertMessage(message) {
+const insertMessage = message => {
   mongo.connect(url, (err, db) => {
     console.log('Mongo DB connected')
     if (err) throw err
     const dbo = db.db('myChatapp')
 
-    dbo.collection('customers').insertOne(message, (err, res) => {
+    dbo.collection('messages').insertOne(message, (err, res) => {
       if (err) throw err
-      console.log('1 document inserted')
+      console.log('1 message inserted')
       db.close()
     })
   })
 }
-// const message = { 'name': 'Alexandra Schnell', 'type': 'message', 'data': 'when is the next meeting' }
-// insertMessage(message)
+
+const getMessages = _ => {
+  mongo.connect(url, function (err, db) {
+    if (err) throw err
+    var dbo = db.db('myChatapp')
+    dbo.collection('messages').find({}).toArray(function (err, result) {
+      if (err) throw err
+      console.log(result)
+      return result
+      db.close()
+    })
+  })
+}
 
 const Websocket = require('ws')
 const wsServer = new Websocket.Server({ port: 3333 })
@@ -27,14 +39,16 @@ wsServer.on('connection', ws => {
   ws.on('message', m => {
     wsServer.clients.forEach(client => {
       if (client !== ws) {
-        client.send(m)
+        // GET data from the client
+        client.send(m + )
       }
     })
 
-
     insertMessage({ m })
-    console.log('received:' + m)
-    ws.send(m)
+    getMessages()
+    console.log('Get from MongoDB ' + getMessages())
+    // console.log('received:' + m)
+    ws.send(m + getMessages())
   })
 
   ws.on('close', _ => {

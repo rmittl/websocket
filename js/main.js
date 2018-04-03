@@ -8,6 +8,7 @@ const personalButton = personalContainer.querySelector('button')
 const fragment = document.createDocumentFragment()
 const nameField = document.querySelector('#name')
 const nameFieldValue = nameField.value
+
 const personalName = nameFieldValue
 
 personalButton.addEventListener('click', e => {
